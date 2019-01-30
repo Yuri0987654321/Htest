@@ -1,22 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.test">
+import java.util.Scanner;
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name="com.example.test.ExampleApplication">
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Ввели строку: ");
+        String in = "сенсация: поп яица снес"; 
+        System.out.println(in);
+        char[] arrChar = in.toCharArray();
+        int sizeArr = VisitToArr(arrChar);
+        char[] filtredArr = FiltredArr(arrChar, sizeArr);
+        Answer(filtredArr);
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
+    }
 
-</manifest>
+    public static void Answer(char[] in) {
+        for (int i = 0; i <= in.length / 2 - 1; i++) {
+            if (in[i] != in[in.length - i - 1]) {
+                System.out.println("Эта фраза не является палиндромом.");
+                break;
+            } else if (i == in.length / 2 - 1)
+                System.out.println("Эта фраза является палиндромом.");
+        }
+
+    }
+
+    public static int VisitToArr(char[] in) {
+        int sizeFiltArr = 0;
+        boolean k;   // Почему работает толко через доп переменную?
+        Filter filter = new Filter();
+        for (int i = 0; i < in.length; i++) {
+            k = Filter.isValid(in[i]);
+            if (k == true) { // Почему работает толко через доп переменную? Почему нельзя вместо "к" указать "filter"?
+                sizeFiltArr++;
+            }
+        }
+        return sizeFiltArr;
+    }
+
+
+    public static char[] FiltredArr(char[] in, int sizeFiltArr) {
+        char[] filtredArr = new char[sizeFiltArr];
+        boolean k;
+        int n = 0;
+        Filter filter = new Filter();
+        for (int i = 0; i < in.length; i++) {
+            k = Filter.isValid(in[i]);
+            if (k == true) {
+                filtredArr[n] = in[i];
+                n++;
+            }
+        }
+        return filtredArr;
+    }
+
+}
